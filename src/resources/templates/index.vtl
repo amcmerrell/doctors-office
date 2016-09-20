@@ -1,0 +1,37 @@
+<h2>Admin Page</h2>
+
+<h3>Add a new doctor.</h3>
+<form action="/doctors" method="post">
+  <label for="doctor-name">Doctor name</label>
+  <input id="doctor-name" name="doctor-name" type="text">
+  <label for="doctor-practice">Specialty</label>
+  <input id="doctor-practice" name="doctor-practice" type="text">
+  <button type="submit" class="btn btn-success">Add Doctor</button>
+</form>
+
+<h3>All Doctors</h3>
+#if($doctors)
+  <p>Click on a doctor to view their patient list.</p>
+  <ul>
+    #foreach ($doctor in $doctors)
+      <li><a href="/doctors/$doctor.getId()">Dr. $doctor.getName()</a></li>
+    #end
+  </ul>
+#else
+  <p>No doctors to display.</p>
+#end
+
+<h3>Add a new patient.</h3>
+<form action="/doctors" method="post">
+  <label for="patient-name">Patient name</label>
+  <input id="patient-name" name="patient-name" type="text">
+  <label for="patient-birthdate">Birthdate</label>
+  <input id="patient-birthdate" name="patient-birthdate" type="text">
+  <label for="doctorId">Select the patient's doctor</label>
+  <select id='doctorId' name='doctorId' type='text'>
+    #foreach($doctor in $doctors)
+      <option value="$doctor.getId()">$doctor.getName()</option>
+    #end
+  </select>
+  <button type="submit" class="btn btn-success">Add Patient</button>
+</form>

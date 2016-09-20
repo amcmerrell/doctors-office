@@ -1,0 +1,16 @@
+<h2>Dr. $doctor.getName()</h2>
+<h4>Doctor in $doctor.getPractice() health</h4>
+
+#if($patients)
+  <ul>
+    #foreach($patient in $patients)
+      <li><a href="/doctors/$doctor.getId()/patients/$patient.getId()">$patient.getName()</a></li>
+    #end
+  </ul>
+#else
+  <p>
+    No patients
+  </p>
+#end
+
+<a href="/">Go Back to Doctors</a>
