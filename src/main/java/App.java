@@ -32,11 +32,33 @@ public class App {
     get("/doctors/:id", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       Doctor theDoctor = Doctor.find(Integer.parseInt(request.params(":id")));
+
       model.put("doctor", theDoctor);
       model.put("patients", Patient.all());
       model.put("template", "templates/doctor.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    post("/doctors/doctorId", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Doctor theDoctor = Doctor.find(Integer.parseInt(request.queryParams("doctorId")));
+      String patientName = request.queryParams("patient-name");
+      String patientBirthdate = request.queryParams("patient-birthdate");
+      Patient thePatient = new Patient(patientName, patientBirthdate, theDoctor.getId());
+      thePatient.save();
+      String url = String.format("/doctors/%d", thePatient.getDoctorId());
+      response.redirect(url);
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/doctors/:doctor_id/patients/:id", (request,response)->{
+      Map<String, Object> model = new HashMap<String, Object>();
+      Doctor theDoctor = Doctor.find(Integer.parseInt(request.params("doctor_id")));
+      Patient thePatient = Patient.find(Integer.parseInt(request.params("id")));
+      model.put("doctor",theDoctor);
+      model.put("patient",thePatient);
+      model.put("template","templates/patient.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
   }
 }

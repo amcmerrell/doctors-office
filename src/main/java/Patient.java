@@ -29,6 +29,12 @@ public class Patient {
     return doctorId;
   }
 
+  public String formatDate(String dateType){
+    String [] dateArray = dateType.split("-");
+    String date = dateArray[1]+"/"+dateArray[2]+"/"+dateArray[0];
+    return date;
+  }
+
   public static List<Patient> all() {
     String sql = "SELECT * FROM patients";
     try(Connection con = DB.sql2o.open()) {
@@ -44,9 +50,9 @@ public class Patient {
   }
 
   public void save() {
-    String sql = "INSERT INTO patients (name, birthdate, doctorId) VALUES (:name, :birthdate, :doctorId)";
+    String sql = "INSERT INTO patients (name, birthdate, doctorid) VALUES (:name, :birthdate, :doctorid)";
     try(Connection con = DB.sql2o.open()) {
-      this.id = (int) con.createQuery(sql, true).addParameter("name", this.name).addParameter("birthdate", this.birthdate).addParameter("doctorId", this.doctorId).executeUpdate().getKey();
+      this.id = (int) con.createQuery(sql, true).addParameter("name", this.name).addParameter("birthdate", this.birthdate).addParameter("doctorid", this.doctorId).executeUpdate().getKey();
     }
   }
 
@@ -54,7 +60,7 @@ public class Patient {
   public boolean equals(Object otherPatient){
     if(!(otherPatient instanceof Patient)){
       return false;
-    }else{
+    } else {
       Patient aPatient = (Patient) otherPatient;
       return this.getName().equals(aPatient.getName()) && this.getId()==aPatient.getId();
     }
