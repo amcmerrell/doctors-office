@@ -17,7 +17,6 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    //why cant we send this to doctors without having a new template
     post("/", (request, response)->{
       Map<String, Object> model = new HashMap<String, Object>();
       String name = request.queryParams("doctor-name");
@@ -45,6 +44,7 @@ public class App {
       String patientName = request.queryParams("patient-name");
       String patientBirthdate = request.queryParams("patient-birthdate");
       Patient thePatient = new Patient(patientName, patientBirthdate, theDoctor.getId());
+      thePatient.formatDate();
       thePatient.save();
       String url = String.format("/doctors/%d", thePatient.getDoctorId());
       response.redirect(url);

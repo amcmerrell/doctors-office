@@ -1,5 +1,5 @@
 <h2>Admin Page</h2>
-TEST
+
 <h3>Add a new doctor.</h3>
 <form action="/" method="post">
   <label for="doctor-name">Doctor name</label>
@@ -22,15 +22,12 @@ TEST
 #end
 
 <h3>Add a new patient.</h3>
-<!-- What's the RESTful route? Can a post method be directed to /doctors/:doctor_id/patients/id? -->
 <form action="/doctors/doctorId" method="post">
   <label for="patient-name">Patient name</label>
   <input id="patient-name" name="patient-name" type="text">
-  <!-- <label for="patient-birthdate">Birthdate</label>
-  <input id="patient-birthdate" name="patient-birthdate" type="text"> -->
   <div class="form-group">
-   <label for="dob">End Date: MM/DD/YYYY</label>
-   <input type="date" class="form-control" name="dob">
+   <label for="patient-birthdate">End Date: MM/DD/YYYY</label>
+   <input type="date" class="form-control" name="patient-birthdate">
  </div>
   <label for="doctorId">Select the patient's doctor</label>
   <select id='doctorId' name='doctorId' type='text'>

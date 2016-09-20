@@ -29,10 +29,10 @@ public class Patient {
     return doctorId;
   }
 
-  public String formatDate(String dateType){
-    String [] dateArray = dateType.split("-");
-    String date = dateArray[1]+"/"+dateArray[2]+"/"+dateArray[0];
-    return date;
+  public void formatDate(){
+    String [] dateArray = birthdate.split("-");
+    this.birthdate = dateArray[1]+"/"+dateArray[2]+"/"+dateArray[0];
+    // return birthdate;
   }
 
   public static List<Patient> all() {
