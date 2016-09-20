@@ -44,7 +44,7 @@ public class Doctor {
       return false;
     }else{
       Doctor aDoctor = (Doctor) otherDoctor;
-      return this.getName().equals(otherDoctor.getName()) && this.getId()==aDoctor;
+      return this.getName().equals(aDoctor.getName()) && this.getId()==aDoctor.getId();
     }
   }
 
@@ -53,16 +53,19 @@ public class Doctor {
     try(Connection con = DB.sql2o.open()){
       this.id = (int) con.createQuery(sql,true).addParameter("name",this.name).addParameter("practice",this.practice).executeUpdate().getKey();
     }
+  }
 
-    public List<Patient> getPatient(){
-      try(Connection con = DB.sql2o.open()){
-        String sql = "SELECT * FROM patients WHERE doctorId = :id";
-        return con.createQuery(sql).addParameter("id",this.id).executeAndFetch(Patient.class);
-      }
+  public List<Patient> getPatient(){
+    try(Connection con = DB.sql2o.open()){
+      String sql = "SELECT * FROM patients WHERE doctorId = :id";
+      return con.createQuery(sql).addParameter("id",this.id).executeAndFetch(Patient.class);
     }
   }
 
-
-
-
+  public void update(String name, String practice){
+    String sql = "UPDATE doctors SET name = :name, practice =:practice WHERE id = :id";
+    try(Connection con = DB.sql2o.open()){
+      con.createQuery(sql).addParameter("name",name).addParameter("practice", practice).addParameter("id",id).executeUpdate();
+    }
+  }
 }
