@@ -33,7 +33,7 @@ public class App {
       Doctor theDoctor = Doctor.find(Integer.parseInt(request.params(":id")));
 
       model.put("doctor", theDoctor);
-      model.put("patients", Patient.all());
+      model.put("patients", theDoctor.getPatient());
       model.put("template", "templates/doctor.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
